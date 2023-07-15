@@ -1,0 +1,17 @@
+<header>
+
+    <ul id="header-nav">
+        <li id="heading"><a href="/">Happens</a></li>
+        <div id="links">
+        <% if(locals.user){%>
+            <li><%= locals.user.name%></li>
+            <li>
+                <a href="/users/signout">Sign Out</a>
+            </li>
+        <% }else{%>
+            <li><a href="/users/signin">Sign In</a></li>
+            <li><a href="/users/signup">Sign Up</a></li>
+        <%}%>    
+        </div>
+    </ul>
+</header>

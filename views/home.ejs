@@ -1,4 +1,16 @@
 <!DOCTYPE html>
 
-    <h1>HAPPENS:: <%= title %></h1>
+<h1>HAPPENS:: <%= title %></h1>
 
+<section id="posts-feed">
+    <% if(locals.user){%>
+        <h3>Post</h3>
+        <form action="/posts/create" method="post" enctype="multipart/form-data">
+            <input type="file" name="photo" placeholder="post-pic">
+            <textarea name="caption" id="" cols="30" rows="3"></textarea>
+            <input type="submit" value="Post">
+        </form>
+        
+    <%} %>
+    
+</section>

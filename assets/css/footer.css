@@ -1,0 +1,25 @@
+footer{
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    background-color: rgb(7, 7, 56);
+    padding: 1%;
+    color: white;
+    font-size: large;
+    font-family: sans-serif;
+}
+
+#footer-links{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#footer-links p{
+    margin: 0;
+}
+
+#footer-links a{
+    text-decoration: none;
+    color: white;
+}

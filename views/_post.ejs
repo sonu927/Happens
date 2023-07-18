@@ -1,0 +1,26 @@
+<li id="post-<%= post._id%>">
+    <p><%= post.user.name%></p>
+    <img src="<%= post.photo%>" alt="<%= post.caption%>" width="200" height="200">
+    <p><%= post.caption%></p>
+
+    <div id="post-comments">
+        <%if(locals.user){%>
+            <form action="/comments/create" method="post">
+                <input type="text" name="content" id="" placeholder="comment here..">
+                <input type="hidden" name="post" value="<%= post._id%>">
+                <input type="submit" value="Add comment">
+            </form>
+        <%}%>
+
+        <div id="post-comments-list">
+            <ul id="post-comment-<%= post.id%>">
+                <% for(c of post.comments){%>
+                    <%- include('_comment')%>
+                <%} %>
+
+            </ul>
+
+        </div>
+
+    </div>
+</li>

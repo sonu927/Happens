@@ -1,11 +1,15 @@
 const User = require('../models/user');
+const Post = require('../models/post');
 
 
-module.exports.profile = function(req,res){
+module.exports.profile = async function(req,res){
+    let posts = await Post.find({user: req.params.id}).populate('user');
     User.findById(req.params.id).then((user)=>{
+        
         return res.render('user_profile',{
             title: user.name,
-            profile_user: user
+            profile_user: user,
+            all_posts: posts
         });
     });
 }

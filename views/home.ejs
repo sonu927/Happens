@@ -1,16 +1,75 @@
-<!DOCTYPE html>
+<link rel="stylesheet" href="/css/home.css">
+<div id="home-container">
 
-<h1>HAPPENS:: <%= title %></h1>
-
-<section id="posts-feed">
-    <% if(locals.user){%>
-        <h3>Post</h3>
-        <form action="/posts/create" method="post" enctype="multipart/form-data">
-            <input type="file" name="photo" placeholder="post-pic">
-            <textarea name="caption" id="" cols="30" rows="3"></textarea>
-            <input type="submit" value="Post">
-        </form>
+    <section id="posts-feed">
+        <% if(locals.user){%>
+            <h3>Post</h3>
+            <form action="/posts/create" method="post" enctype="multipart/form-data">
+                <input type="file" name="photo" placeholder="post-pic">
+                <textarea name="caption" id="" cols="30" rows="3"></textarea>
+                <input type="submit" value="Post">
+            </form>
+        <%} %>
         
-    <%} %>
+            <div id="posts-list-container">
+                <ul>
+                    <% for(post of posts){%>
+                        <div>
+                            <li id="post-<%= post._id%>">
+                                <p><%= post.user.name%></p>
+                                <img src="<%= post.photo%>" alt="<%= post.caption%>" width="200" height="200">
+                                <p><%= post.caption%></p>
+
+                                <div id="post-comments">
+                                    <%if(locals.user){%>
+                                        <form action="/comments/create" method="post">
+                                            <input type="text" name="content" id="" placeholder="comment here..">
+                                            <input type="hidden" name="post" value="<%= post._id%>">
+                                            <input type="submit" value="Add comment">
+                                        </form>
+                                    <%}%>
+
+                                    <div id="post-comments-list">
+                                        <ul id="post-comment-<%= post.id%>">
+                                            <% for(c of post.comments){%>
+                                                <li>
+                                                    <p>
+                                                        <%= c.content%>
+                                                    </p>
+                                                    <small>
+                                                        <%= c.user.name%>
+                                                    </small>
+
+                                                </li>
+                                                
+                                            <%} %>
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+                            </li>
+                        </div>
+                            
+                    <%} %>
+                </ul>
+            </div>
     
-</section>
+    </section>
+    
+    <section id="user-N-friends">
+        <div>
+            <%if(locals.user){%>
+                <h4>Users</h4>
+                <% for(u of users){%>
+                    <p>
+                        <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+                    </p>    
+                <%} %>    
+            <%}%>
+        </div>
+    
+    </section>
+
+</div>

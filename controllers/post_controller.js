@@ -12,12 +12,24 @@ module.exports.create = function(req,res){
         }).then((createdPost)=>{
             if(req.file){
                 createdPost.photo = Post.photoPath + '/' + req.file.filename;
+                
             }
-            return createdPost.save();
-        }).then(()=>{
+            return createdPost.populate('user');
+        }).then((populatedPost)=>{
+            populatedPost.save();
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        post: populatedPost
+                    },
+                    message: "Post Created"
+                });
+            }
+
             req.flash('success','Post Uploaded');
             return res.redirect('back');
         });
+
 
     });
 }

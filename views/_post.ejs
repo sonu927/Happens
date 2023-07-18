@@ -5,7 +5,7 @@
 
     <div id="post-comments">
         <%if(locals.user){%>
-            <form action="/comments/create" method="post">
+            <form action="/comments/create" method="post" id="comment-form">
                 <input type="text" name="content" id="" placeholder="comment here..">
                 <input type="hidden" name="post" value="<%= post._id%>">
                 <input type="submit" value="Add comment">

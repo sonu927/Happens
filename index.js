@@ -11,6 +11,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportGoogle = require('./config/passport-google-oauth');
 const MongoStores = require('connect-mongo')(session);
 //flash messages
 const flash = require('connect-flash');

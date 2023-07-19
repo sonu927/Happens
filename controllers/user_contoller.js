@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const Post = require('../models/post');
+const fs = require('fs');
+const path = require('path');
 
 
 module.exports.profile = async function(req,res){
@@ -44,15 +46,7 @@ module.exports.create = function(req, res) {
 
     User.findOne({ email: req.body.email }).then((user) => {
         if (!user) {
-            // return User.create(req.body).then((createdUser) => {
-            //     // Save the created user object
-            //     if(createdUser.avatar ==''){
-            //         createdUser.avatar = 'https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg';
-            //     }
-            //     return createdUser.save();
-            // }).then(() => {
-            //     return res.redirect('/users/signin');
-            // });
+           
 
             User.uploadedAvatar(req,res,function(err){
                 if(err){console.log('****Multer error: ',err);}
@@ -84,7 +78,7 @@ module.exports.create = function(req, res) {
 //to create session for the logged in user
 module.exports.createSession = async function(req,res){
     
-    let user = await User.findOne({email: req.body.email});
+    // let user = await User.findOne({email: req.body.email});
     req.flash('success','Logged in Successfully');
 
     return res.redirect('/');
@@ -101,5 +95,34 @@ module.exports.destroySession = function(req,res){
        
         req.flash('success', 'You have logged out');
         return res.redirect('/');
+    });
+}
+
+//to update user profile
+module.exports.update = async function(req,res){
+    
+    let user = await User.findById(req.params.id);
+
+    User.uploadedAvatar(req,res,function(err){
+        if(err){console.log("****Multer error in profile updation");}
+
+        user.name = req.body.name;
+        user.email = req.body.email;
+
+        if(req.file){
+            if(user.avatar == 'https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg'){
+                user.avatar = User.avatarPath+'/'+req.file.filename;
+                user.save();
+                return res.redirect('back');
+            }
+            if(user.avatar){
+                fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+            }
+            
+            user.avatar = User.avatarPath+'/'+req.file.filename;
+        }
+
+        user.save();
+        return res.redirect('back');
     });
 }

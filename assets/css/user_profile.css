@@ -1,3 +1,181 @@
-body{
-    background-color: lightgray;
+#container{
+    text-align: center;
+    border: 1px solid black;
+    margin: 3%;
+    padding: 2%;
+    background-color: rgba(255, 255, 255, 0.678);
+    font-family: sans-serif;
+    width: 50%;
+    position: relative;
+    left: 20%;
 }
+
+#img-container{
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    outline: 5px solid black;
+    /* border: 5px solid black; */
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+}
+
+#img-container img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;   
+}
+
+#info-container{
+    display: flex;
+    padding: 1%;
+    justify-content: center;
+    align-items: center;
+    gap: 6em;
+}
+
+#credentials h1{
+    background: none;
+    text-shadow: rgb(121, 121, 121) 0px 0px 5px;
+}
+
+#edit-btn-container{
+    margin: 2%;
+}
+
+#edit-btn-container button{
+    width: 20%;
+    padding: 1%;
+    text-transform: uppercase;
+    font-weight: bolder;
+    background-color: rgb(7, 7, 56);
+    color: white;
+    border: none;
+    border-radius: 35px;
+}
+
+#edit-btn-container button:hover{
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+}
+
+#users-posts{
+    display: flex;
+    padding: 1%;
+    justify-content: space-evenly;
+
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#post-img-container{
+    width: 250px;
+    height: 250px;
+}
+
+#post-img-container img{
+    width: 100%;
+    height: 100%;
+}
+
+.single-post{
+    padding: 1%;
+    border: 1px solid black;
+    background-color: white;
+    box-shadow: 2px 4px 5px 3px rgb(121, 121, 121);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+#delete-link{
+    width: fit-content;
+    border-radius: 50%;
+    background-color: black;
+    box-shadow: 2px 4px 5px 3px rgb(151, 149, 149);
+}
+#delete-link a{
+    color: rgb(238, 58, 58);
+    font-size: 20px;
+}
+
+#caption p{
+    font-size: larger;
+    font-weight: bold;
+}
+#update-form{
+    width: 40%;
+    /* padding: 2%; */
+    border: 1px solid yellow;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    z-index: 10000;
+    transform: translate(-50%,-50%);
+    display: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+#update-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#update-form form input {
+    margin-bottom: 4%;
+    height: 25px;
+    width: 70%;
+    padding: 2%;
+    border: none;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+#update-form form input[type="submit"]{
+    width: 50%;
+    height: 40px;
+    cursor: pointer;
+    border: none;
+    font-size: large;
+    background-color: rgb(7, 7, 56);
+    color: white;
+}
+
+#update-form form label{
+    font-size: large;
+    font-weight: bold;
+}
+
+
+
+#submit-btn:hover{
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+}
+
+
+#update-form form input[type="file"]{
+    display: none;
+}
+ 
+#profile-pic{
+    cursor: pointer;
+}
+#profile-pic i{
+    color: rgb(7, 7, 56);
+    font-size: large;
+}
+
+#form-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0,0.8);
+    z-index: 9999;
+    display: none;
+}
+
+

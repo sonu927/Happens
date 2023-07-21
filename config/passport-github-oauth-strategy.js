@@ -9,7 +9,7 @@ passport.use(new githubStrategy({
         callbackURL: 'http://localhost:8000/users/auth/github/callback'
     },
     function(accessToken, refreshToken, profile, done){
-        console.log(profile);
+        //console.log(profile);
         //find user
         User.findOne({email: profile.emails[0].value}).then((user)=>{
             if(user){

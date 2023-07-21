@@ -2,6 +2,46 @@
     <p><%= post.user.name%></p>
     <img src="<%= post.photo%>" alt="<%= post.caption%>" width="200" height="200">
     <p><%= post.caption%></p>
+    <% if(locals.user){%>
+        <a id="main-frame-like-<%= post.id%>" href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Like" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+            <% let like; %>
+            <% for(l of post.likes){%>
+                <% if(l.user == locals.user.id){%>
+                    <% like = l; %>    
+                <%} %>    
+            <%} %>
+            <%if(like){%>
+                <%= post.likes.length%> <%= like.reaction%>    
+            <%}else{%>
+                <%= like%>
+                <%= post.likes.length%> Likes
+            <%}%>
+        </a>
+        <small>
+            <ul>
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Like" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> Like
+                </a></li>
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Love" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> Love
+                </a></li>
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Haha" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> Haha
+                </a></li>
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Wow" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> Wow
+                </a></li>
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Sad" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> Sad
+                </a></li>
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Angry" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> Angry
+                </a></li>
+            </ul>
+        </small>
+    <%}else{%>
+        <p><%= post.likes.length%> Reaction</p>
+    <%} %>
 
     <div id="post-comments">
         <%if(locals.user){%>

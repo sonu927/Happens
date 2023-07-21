@@ -10,15 +10,19 @@ module.exports.home = async function(req,res){
             path:'comments',
             populate:{
                 path: 'user'
+            },
+            populate:{
+                path: 'likes'
             }
-        });
+        }).populate('likes');
 
         let all_users = await User.find({});
-
+        let curr_user = await User.findOne({_id: req.user._id}).populate('requestRecv');
         return res.render('home',{
             title: 'Home',
             posts: posts,
-            users: all_users
+            users: all_users,
+            curr_user: curr_user
         });
     }
 

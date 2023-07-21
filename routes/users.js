@@ -29,4 +29,6 @@ router.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   usersController.createSession);
 
+router.use('/friends',require('./friends'));
+
 module.exports = router;

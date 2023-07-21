@@ -25,13 +25,51 @@
     </section>
     
     <section id="user-N-friends">
+        <% if(locals.user){%>
+            <div id="friend-requests">
+                <h3>Friend Request</h3>
+                <%if(locals.user.requestRecv.length > 0){%>
+                    <% for(r of curr_user.requestRecv){%>
+                        <p>
+                            <a href="/users/profile/<%= r.id%>"><%= r.name%></a>
+                            <button><a href="/users/friends/accept/<%= r.id%>">Accept</a></button>
+                            <button><a href="/users/friends/reject/<%= r.id%>">Reject</a></button>
+                        </p>    
+                    <%} %>
+                <%}else{%>
+                    <p>No Requests...</p>    
+                <%}%>
+            </div>
+            <hr>
+        <%} %>
+        
         <div>
             <%if(locals.user){%>
                 <h4>Users</h4>
                 <% for(u of users){%>
-                    <p>
-                        <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
-                    </p>    
+                    <% const hasCommonFriendship = locals.user.friendships.some(friendshipId => u.friendships.some(uFriendshipId => friendshipId.toString() === uFriendshipId.toString())); %>
+                    <% if(locals.user.pendingReq.includes(u.id)){%>
+                        <p>
+                            <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+                            <button><a href="/users/friends/cancel/<%= u.id%>" title="Cancel Request">Request Sent</a></button>
+                        </p>
+                    <%}else if(locals.user.id == u.id){%>
+                        <p>
+                            <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+                        </p>
+                    <%}else if(hasCommonFriendship){%>
+                        <p>
+                            <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+                            <button><a href="/users/friends/unfriend/<%= u.id%>">Unfriend</a></button>
+                        </p>
+                        
+                    <%}else{%>
+                        <p>
+                            <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+                            <button><a href="/users/friends/add/<%= u.id%>">Add</a></button>
+                        </p>
+                    <%}%>
+                      
                 <%} %>    
             <%}%>
         </div>
@@ -42,3 +80,4 @@
 
 <script src="/js/home_post.js"></script>
 <script src="/js/post_comment.js"></script>
+<script src="/js/toggle_likes.js"></script>

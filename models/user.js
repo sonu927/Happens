@@ -35,6 +35,20 @@ const userSchema = new mongoose.Schema({
             ref: 'Friendship'
             
         }
+    ],
+    //array of user ids you recieved friend requests from
+    requestRecv:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+    //array of user ids you sent friend requests to
+    pendingReq:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
     ]
 },{
     timestamps:true

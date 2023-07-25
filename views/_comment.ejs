@@ -11,7 +11,7 @@
         <%= c.user.name%>
     </small>
     <% if(locals.user){%>
-        <a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=Like" data-likes="<%= c.likes.length%>" class="toggle-like-button">
+        <a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=👍" data-likes="<%= c.likes.length%>" class="toggle-like-button">
             <% let like; %>
             <% for(l of c.likes){%>
                 <% if(l.user == locals.user.id){%>
@@ -22,28 +22,28 @@
                 <%= c.likes.length%> <%= like.reaction%>    
             <%}else{%>
                 <%= like%>
-                <%= c.likes.length%> Likes
+                <%= c.likes.length%> 👍
             <%}%>
         </a>
         <small>
             <ul>
-                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=Like" data-likes="<%= c.likes.length%>" class="toggle-like-button">
-                    <%= c.likes.length%> Likes
+                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=👍" data-likes="<%= c.likes.length%>" class="toggle-like-button">
+                    <%= c.likes.length%> 👍
                 </a></li>
-                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=Love" data-likes="<%= c.likes.length%>" class="toggle-like-button">
-                    <%= c.likes.length%> Love
+                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=❤️" data-likes="<%= c.likes.length%>" class="toggle-like-button">
+                    <%= c.likes.length%> ❤️
                 </a></li>
-                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=Haha" data-likes="<%= c.likes.length%>" class="toggle-like-button">
-                    <%= c.likes.length%> Haha
+                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=😂" data-likes="<%= c.likes.length%>" class="toggle-like-button">
+                    <%= c.likes.length%> 😂
                 </a></li>
-                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=Wow" data-likes="<%= c.likes.length%>" class="toggle-like-button">
-                    <%= c.likes.length%> Wow
+                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=😲" data-likes="<%= c.likes.length%>" class="toggle-like-button">
+                    <%= c.likes.length%> 😲
                 </a></li>
-                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=Sad" data-likes="<%= c.likes.length%>" class="toggle-like-button">
-                    <%= c.likes.length%> Sad
+                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=😥" data-likes="<%= c.likes.length%>" class="toggle-like-button">
+                    <%= c.likes.length%> 😥
                 </a></li>
-                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=Angry" data-likes="<%= c.likes.length%>" class="toggle-like-button">
-                    <%= c.likes.length%> Angry
+                <li><a id="main-frame-like-<%= c.id%>" href="/likes/toggle/?id=<%= c._id%>&type=Comment&reaction=😡" data-likes="<%= c.likes.length%>" class="toggle-like-button">
+                    <%= c.likes.length%> 😡
                 </a></li>
             </ul>
         </small>

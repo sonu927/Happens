@@ -5,9 +5,9 @@
     padding: 2%;
     background-color: rgba(255, 255, 255, 0.678);
     font-family: sans-serif;
-    width: 50%;
+    width: 70%;
     position: relative;
-    left: 20%;
+    left: 12%;
 }
 
 #img-container{
@@ -96,7 +96,12 @@
     color: rgb(238, 58, 58);
     font-size: 20px;
 }
-
+#caption{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5em;
+}
 #caption p{
     font-size: larger;
     font-weight: bold;

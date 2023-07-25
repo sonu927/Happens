@@ -71,7 +71,7 @@
         
         <div>
             <%if(locals.user){%>
-                <h4>Users</h4>
+                <h4>Add Friends</h4>
                 <% for(u of users){%>
                     <% const hasCommonFriendship = locals.user.friendships.some(friendshipId => u.friendships.some(uFriendshipId => friendshipId.toString() === uFriendshipId.toString())); %>
                     <% if(locals.user.pendingReq.includes(u.id)){%>
@@ -84,10 +84,11 @@
                             <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
                         </p>
                     <%}else if(hasCommonFriendship){%>
-                        <p>
+                        <!-- <p>
                             <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
                             <button><a href="/users/friends/unfriend/<%= u.id%>">Unfriend</a></button>
-                        </p>
+                        </p> -->
+                        <% continue %>
                         
                     <%}else{%>
                         <p>

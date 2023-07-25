@@ -4,18 +4,7 @@ const User = require('../models/user');
 module.exports.home = async function(req,res){
 
     if(req.user){
-        let posts = await Post.find({user: req.user._id})
-        .sort('-createdAt')
-        .populate('user').populate({
-            path:'comments',
-            populate:{
-                path: 'user'
-            },
-            populate:{
-                path: 'likes'
-            }
-        }).populate('likes');
-
+        
         let all_users = await User.find({});
         let curr_user = await User.findOne({ _id: req.user._id })
         .populate('requestRecv')
@@ -26,6 +15,28 @@ module.exports.home = async function(req,res){
             { path: 'to_user' }
             ]
         });
+        const userAndFriendsIdsSet = new Set([req.user.id]);
+
+        curr_user.friendships.forEach((friendship) => {
+            userAndFriendsIdsSet.add(friendship.from_user.id.toString());
+            userAndFriendsIdsSet.add(friendship.to_user.id.toString());
+        });
+
+        const userAndFriendsIds = Array.from(userAndFriendsIdsSet);
+
+        //console.log(userAndFriendsIds);
+
+        let posts = await Post.find({user: {$in: userAndFriendsIds}})
+        .sort('-createdAt')
+        .populate('user').populate({
+            path:'comments',
+            populate:{
+                path: 'user'
+            },
+            populate:{
+                path: 'likes'
+            }
+        }).populate('likes');
         //console.log(curr_user);
         return res.render('home',{
             title: 'Home',

@@ -3,7 +3,7 @@
     <img src="<%= post.photo%>" alt="<%= post.caption%>" width="200" height="200">
     <p><%= post.caption%></p>
     <% if(locals.user){%>
-        <a id="main-frame-like-<%= post.id%>" href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Like" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+        <a id="main-frame-like-<%= post.id%>" href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=👍" data-likes="<%= post.likes.length%>" class="toggle-like-button">
             <% let like; %>
             <% for(l of post.likes){%>
                 <% if(l.user == locals.user.id){%>
@@ -14,28 +14,28 @@
                 <%= post.likes.length%> <%= like.reaction%>    
             <%}else{%>
                 <%= like%>
-                <%= post.likes.length%> Likes
+                <%= post.likes.length%> 👍
             <%}%>
         </a>
         <small>
             <ul>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Like" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> Like
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=👍" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> 👍
                 </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Love" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> Love
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=❤️" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> ❤️
                 </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Haha" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> Haha
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😂" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> 😂
                 </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Wow" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> Wow
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😲" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> 😲
                 </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Sad" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> Sad
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😥" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> 😥
                 </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=Angry" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> Angry
+                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😡" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                    <%= post.likes.length%> 😡
                 </a></li>
             </ul>
         </small>

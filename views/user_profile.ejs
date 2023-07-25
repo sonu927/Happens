@@ -54,7 +54,20 @@
                     <h1><%= profile_user.email %></h1>
                 </div>
         </div>
-        
+
+        <% const hasCommonFriendship = locals.user.friendships.some(friendshipId => profile_user.friendships.some(uFriendshipId => friendshipId.toString() === uFriendshipId.toString())); %>
+        <% if(hasCommonFriendship){%>
+            <button><a href="/users/friends/unfriend/<%= profile_user.id%>">Unfriend</a></button>    
+        <%}else if(locals.user.pendingReq.includes(profile_user.id)){%>
+            <button><a href="/users/friends/cancel/<%= profile_user.id%>" title="Cancel Request">Request Sent</a></button>    
+        <%}else if(locals.user.requestRecv.includes(profile_user.id)){%>
+            <p>
+                <button><a href="/users/friends/accept/<%= profile_user.id%>">Accept</a></button>
+                <button><a href="/users/friends/reject/<%= profile_user.id%>">Reject</a></button>
+            </p>    
+        <%}else{%>
+            <button><a href="/users/friends/add/<%= profile_user.id%>">Add</a></button>    
+        <%} %>
     <%}%>
     
     <hr>

@@ -18,6 +18,12 @@ const MongoStores = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const customMiddleware = require('./config/middleware');
 
+//set up chat server to be used by socket.io
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('chat Server is listening on port 5000'); 
+
 // Parse URL-encoded bodies (for form data)
 app.use(express.urlencoded({ extended: true }));
 

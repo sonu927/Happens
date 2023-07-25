@@ -17,7 +17,16 @@ module.exports.home = async function(req,res){
         }).populate('likes');
 
         let all_users = await User.find({});
-        let curr_user = await User.findOne({_id: req.user._id}).populate('requestRecv');
+        let curr_user = await User.findOne({ _id: req.user._id })
+        .populate('requestRecv')
+        .populate({
+            path: 'friendships',
+            populate: [
+            { path: 'from_user' },
+            { path: 'to_user' }
+            ]
+        });
+        //console.log(curr_user);
         return res.render('home',{
             title: 'Home',
             posts: posts,

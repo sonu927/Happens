@@ -5,7 +5,9 @@
         <li id="heading"><a href="/">Happens</a></li>
         <div id="links">
         <% if(locals.user){%>
-            <li><%= locals.user.name%></li>
+            <li>
+                <a href="/users/profile/<%= locals.user.id%>"><%= locals.user.name%></a>
+            </li>
             <li>
                 <a href="/users/signout">Sign Out</a>
             </li>

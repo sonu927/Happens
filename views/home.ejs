@@ -1,6 +1,32 @@
 <link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/chat_box.css">
 <div id="home-container">
 
+    <section id="users-friends">
+        <%if(locals.user){%>
+            <h3>Friends</h3>
+            <% if(locals.user.friendships.length >0){%>
+                <% for(f of curr_user.friendships){%>
+                    <% if(f.from_user.id == curr_user.id){%>
+                        <p>
+                            <a href="/users/profile/<%= f.to_user.id%>"><%= f.to_user.name%></a>
+                            <button class="chat-btn" data-friendID="<%= f.to_user.id%>"><a  class="chatLink" href="/chat/messages/?fid=<%= f.to_user.id%>">Chat</a></button>
+                        </p>    
+                    <%}else{%>
+                        <p>
+                            <a href="/users/profile/<%= f.from_user.id%>"><%= f.from_user.name%></a>
+                            <button class="chat-btn" data-friendID="<%= f.from_user.id%>"><a class="chatLink" href="/chat/messages/?fid=<%= f.from_user.id%>">Chat</a></button>
+                        </p>  
+                    <%} %>    
+                <%} %>
+            <%}else{%>
+                <p>No Friends.....:(</p>    
+            <%} %>
+            
+                
+        <%}%>
+
+    </section>
     <section id="posts-feed">
         <% if(locals.user){%>
             <h3>Post</h3>
@@ -75,9 +101,100 @@
         </div>
     
     </section>
+    <%- include('_chat_box') -%>
 
 </div>
 
 <script src="/js/home_post.js"></script>
 <script src="/js/post_comment.js"></script>
 <script src="/js/toggle_likes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.min.js"></script>
+<script src="/js/chat_engine.js"></script>
+<% if(locals.user){%>
+    <script>
+        const chat = new ChatEngine('user-chat-box', '<%= locals.user.email %>' , '<%= locals.user.name%>');
+        $(document).ready(function() {
+            let selectedFriendID; // Declare the variable outside the click event listener
+            // Function to scroll chat box to bottom
+            function scrollChatBoxToBottom() {
+                var chatBox = document.getElementById("chat-messages-list");
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            $('.chat-btn').click(function() {
+                selectedFriendID = this.getAttribute('data-friendID'); // Update the variable inside the listener
+                //console.log("Friend ID clicked:", selectedFriendID);
+                $('#user-chat-box').toggle();
+                if($('#user-chat-box').is(':visible')){
+                    scrollChatBoxToBottom();
+                }
+                
+                chat.startChat(selectedFriendID);
+
+                // Set the friendId as a data attribute on the send-message button
+                $('#send-message').data('friendID', selectedFriendID);
+            });
+
+            // Event listener for sending a chat message
+            $('#send-message').on('click', function() {
+                const message = $('#chat-message-input').val();
+                const friendId = $('#send-message').data('friendID'); // Use the correct element to retrieve the value
+                const senderId = '<%= locals.user.id%>'
+                //console.log(friendId);
+                chat.sendMessage(message,senderId,friendId);
+                $('#chat-message-input').val('');
+                scrollChatBoxToBottom();
+            });
+
+
+            let curr_user_id = '<%= locals.user.id%>'
+            let oldMsg = function(){
+                let chatLink = $('.chatLink');
+                chatLink.click(function(e){
+                    e.preventDefault();
+                    const self = this;
+                    //console.log('chatLink :',$(self).attr('href'));
+                
+                    $.ajax({
+                        type: 'post',
+                        url: $(self).attr('href')
+                    })
+                    .done(function(data){
+                        $('#chat-messages-list').empty();
+                        for(m of data.data.messages){
+                            let newMessage = $('<li>');
+
+                            let messageType = "other-message";
+
+                            if(m.sender._id == curr_user_id){
+                                messageType = "self-message";
+                            }
+                            newMessage.append($('<p>',{
+                                'html': m.sender.name
+                            }));
+
+                            newMessage.append($('<span>',{
+                                'html': m.content
+                            }));
+
+                            newMessage.addClass(messageType);
+
+                            $('#chat-messages-list').append(newMessage);
+                        }
+                        //console.log(data);
+                        scrollChatBoxToBottom();
+                    })
+                    .fail(function(errData){
+                        console.log('error in completing the old messag request',errData);
+                    });
+                });
+            }
+
+            oldMsg();
+
+
+        });
+
+        
+    </script>    
+<%}%>

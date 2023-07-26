@@ -2,7 +2,8 @@ const User = require('../models/user');
 const Post = require('../models/post');
 const fs = require('fs');
 const path = require('path');
-
+const crypto = require('crypto');
+const nodeMailer = require('../mailers/reset_password_mailer');
 
 module.exports.profile = async function(req,res){
     let posts = await Post.find({user: req.params.id}).populate('user');
@@ -125,4 +126,88 @@ module.exports.update = async function(req,res){
         user.save();
         return res.redirect('back');
     });
+}
+
+//to open the reset password page
+module.exports.resetPassword = function(req,res){
+    return res.render('reset_password',{
+        access: false,
+        title: 'Happen | Reset Password'
+    });
+}
+
+//send reset password mail
+module.exports.mailResetPass = async function(req,res){
+    try{
+
+        let user = await User.findOne({email: req.body.yourEmail});
+
+        if(user){
+            if(user.isTokenValid == false){
+                user.accessToken = crypto.randomBytes(30).toString('hex');
+                user.isTokenValid = true;
+                user.save();
+            }
+
+            nodeMailer.setPassword(user);
+
+            req.flash('success','Reset password mail sent');
+            return res.redirect('/');
+
+        }
+
+    }catch(err){
+        console.log('Error in reset mail :', err);
+        return;
+    }
+}
+
+module.exports.setPassword = async function(req,res){
+    try{
+        let user = await User.findOne({
+            accessToken: req.params.accessToken
+        });
+
+        if(user){
+            return res.render('reset_password',{
+                access: true,
+                accessToken: req.params.accessToken,
+                title: 'Happen | Reset Password'
+            });
+        }else{
+            console.log('user not found');
+            return res.redirect('/');
+        }
+
+    }catch(err){
+        console.log('error: ',err);
+        return;
+    }
+}
+
+module.exports.updatePassword = async function(req,res){
+    try{
+        let user = await User.findOne({
+            accessToken: req.params.accessToken
+        });
+
+        if(user){
+            if(user.isTokenValid){
+                if(req.body.newPassword == req.body.confirmPassword){
+                    user.password = req.body.newPassword;
+                    user.isTokenValid = false;
+                    user.save();
+                    req.flash('success','Password changed successfully');
+                    return res.redirect('/users/signin');
+                }else{
+                    console.log("Opps!! Password don't match");
+                    return res.redirect('back');
+                }
+            }
+        }
+
+    }catch(err){
+        console.log('error in update password function :',err);
+        return;
+    }
 }

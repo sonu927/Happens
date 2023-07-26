@@ -31,4 +31,9 @@ router.get('/auth/github/callback',
 
 router.use('/friends',require('./friends'));
 
+router.get('/reset-password',usersController.resetPassword);
+router.post('/set-password-mail',usersController.mailResetPass);
+router.get('/set-password/:accessToken',usersController.setPassword);
+router.post('/update-password/:accessToken',usersController.updatePassword);
+
 module.exports = router;

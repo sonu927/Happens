@@ -10,12 +10,12 @@
                     <% if(f.from_user.id == curr_user.id){%>
                         <p>
                             <a href="/users/profile/<%= f.to_user.id%>"><%= f.to_user.name%></a>
-                            <button class="chat-btn" data-friendID="<%= f.to_user.id%>"><a  class="chatLink" href="/chat/messages/?fid=<%= f.to_user.id%>">Chat</a></button>
+                            <button class="chat-btn" data-friendID="<%= f.to_user.id%>" data-friendmail="<%= f.to_user.email%>"><a  class="chatLink" href="/chat/messages/?fid=<%= f.to_user.id%>">Chat</a></button>
                         </p>    
                     <%}else{%>
                         <p>
                             <a href="/users/profile/<%= f.from_user.id%>"><%= f.from_user.name%></a>
-                            <button class="chat-btn" data-friendID="<%= f.from_user.id%>"><a class="chatLink" href="/chat/messages/?fid=<%= f.from_user.id%>">Chat</a></button>
+                            <button class="chat-btn" data-friendID="<%= f.from_user.id%>" data-friendmail="<%= f.from_user.email%>"><a class="chatLink" href="/chat/messages/?fid=<%= f.from_user.id%>">Chat</a></button>
                         </p>  
                     <%} %>    
                 <%} %>
@@ -115,7 +115,9 @@
     <script>
         const chat = new ChatEngine('user-chat-box', '<%= locals.user.email %>' , '<%= locals.user.name%>');
         $(document).ready(function() {
-            let selectedFriendID; // Declare the variable outside the click event listener
+            let selectedFriendmail; // Declare the variable outside the click event listener
+            let selectedFriendID;
+            let room;
             // Function to scroll chat box to bottom
             function scrollChatBoxToBottom() {
                 var chatBox = document.getElementById("chat-messages-list");
@@ -123,14 +125,18 @@
             }
 
             $('.chat-btn').click(function() {
-                selectedFriendID = this.getAttribute('data-friendID'); // Update the variable inside the listener
+                selectedFriendmail = this.getAttribute('data-friendmail'); // Update the variable inside the listener
+                selectedFriendID = this.getAttribute('data-friendID');
+                const arr = ['<%= locals.user.email%>',selectedFriendmail];
+                arr.sort();
+                room = arr[0]+arr[1];
                 //console.log("Friend ID clicked:", selectedFriendID);
                 $('#user-chat-box').toggle();
                 if($('#user-chat-box').is(':visible')){
                     scrollChatBoxToBottom();
                 }
                 
-                chat.startChat(selectedFriendID);
+                chat.startChat(selectedFriendmail);
 
                 // Set the friendId as a data attribute on the send-message button
                 $('#send-message').data('friendID', selectedFriendID);
@@ -142,7 +148,7 @@
                 const friendId = $('#send-message').data('friendID'); // Use the correct element to retrieve the value
                 const senderId = '<%= locals.user.id%>'
                 //console.log(friendId);
-                chat.sendMessage(message,senderId,friendId);
+                chat.sendMessage(message,senderId,friendId,room);
                 $('#chat-message-input').val('');
                 scrollChatBoxToBottom();
             });

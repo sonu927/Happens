@@ -9,7 +9,6 @@ module.exports.chatSockets = function(socketServer){
           credentials: true
         }
     });
-      
 
     io.sockets.on('connection',function(socket){
         console.log('new connection received ',socket.id);

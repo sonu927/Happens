@@ -61,7 +61,9 @@ class ChatEngine{
     }
 
     startChat(friendId){
-        const room = 'happen';
+        const arr = [this.userEmail,friendId];
+        arr.sort();
+        const room = arr[0]+arr[1];
         this.socket.emit('join_room',{
             user_email: this.userEmail,
             chatRoom: room
@@ -92,14 +94,14 @@ class ChatEngine{
       }
       
 
-    sendMessage(message,senderId, friendId) {
+    sendMessage(message,senderId, friendId,room) {
         const data = {
           senderName: this.userName,
           senderMail: this.userEmail,
           sender: senderId,
           receiver: friendId,
           message: message,
-          chatroom: 'happen'
+          chatroom: room
         };
         this.socket.emit('send_message', data);
     }

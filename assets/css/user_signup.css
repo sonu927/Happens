@@ -1,0 +1,116 @@
+#signup-container{
+    width: 40%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+    left: 25%;
+    top: 1em;
+    padding: 0.5%;
+    background-color: rgb(192, 188, 188);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#signup-form-container{
+    height: 70%;
+    border-radius: 25px;
+    background-color: white;
+    margin-top: -2em;
+    
+}
+
+#signup-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    height: 100%;
+}
+
+.input-div{
+    position: relative;
+}
+
+.form-input{
+    background: transparent;
+    outline: none;
+    border: 0;
+    border-bottom: 1px solid black;
+    height: 20px;
+    font-size: 1rem;
+    padding: 7px 0;
+}
+
+.form-input::placeholder{
+    color: transparent;
+}
+.form-label{
+    position: absolute;
+    display: block;
+    top: -10px;
+    font-size: 1rem;
+    color: rgb(19, 18, 18);
+    transition: 0.2s;
+    font-weight: bold;
+}
+.form-input:placeholder-shown~ .form-label{
+    font: 1.2rem;
+    cursor: text;
+    top: 10px;
+    font-weight: lighter;
+}
+
+#signup-form input[type="file"]{
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 5em;
+}
+
+#signup-form input[type="submit"]{
+    height: 3em;
+    width: 6em;
+    border: none;
+    border-radius: 15px;
+    background-color: rgb(7, 7, 56);
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#signup-form input[type="submit"]:hover{
+    background-color: rgb(22, 22, 94);
+    height: 3.5em;
+    width: 6.5em;
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+}
+
+#signup-google-github{
+    display: flex;
+    width: 70%;
+    justify-content: space-evenly;
+}
+
+#signup-google-github div{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: 2em;
+    width: 30%;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+#signup-google-github div a{
+    text-decoration: none;
+    color: white;
+}
+
+#signup-google-github div:hover{
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+}

@@ -55,19 +55,23 @@
                 </div>
         </div>
 
-        <% const hasCommonFriendship = locals.user.friendships.some(friendshipId => profile_user.friendships.some(uFriendshipId => friendshipId.toString() === uFriendshipId.toString())); %>
-        <% if(hasCommonFriendship){%>
-            <button><a href="/users/friends/unfriend/<%= profile_user.id%>">Unfriend</a></button>    
-        <%}else if(locals.user.pendingReq.includes(profile_user.id)){%>
-            <button><a href="/users/friends/cancel/<%= profile_user.id%>" title="Cancel Request">Request Sent</a></button>    
-        <%}else if(locals.user.requestRecv.includes(profile_user.id)){%>
-            <p>
-                <button><a href="/users/friends/accept/<%= profile_user.id%>">Accept</a></button>
-                <button><a href="/users/friends/reject/<%= profile_user.id%>">Reject</a></button>
-            </p>    
-        <%}else{%>
-            <button><a href="/users/friends/add/<%= profile_user.id%>">Add</a></button>    
-        <%} %>
+        <div id="req-btn">
+            <% const hasCommonFriendship = locals.user.friendships.some(friendshipId => profile_user.friendships.some(uFriendshipId => friendshipId.toString() === uFriendshipId.toString())); %>
+            <% if(hasCommonFriendship){%>
+                <button><a href="/users/friends/unfriend/<%= profile_user.id%>">Unfriend</a></button>    
+            <%}else if(locals.user.pendingReq.includes(profile_user.id)){%>
+                <button><a href="/users/friends/cancel/<%= profile_user.id%>" title="Cancel Request">Request Sent</a></button>    
+            <%}else if(locals.user.requestRecv.includes(profile_user.id)){%>
+                <p>
+                    <button><a href="/users/friends/accept/<%= profile_user.id%>">Accept</a></button>
+                    <button><a href="/users/friends/reject/<%= profile_user.id%>">Reject</a></button>
+                </p>    
+            <%}else{%>
+                <button><a href="/users/friends/add/<%= profile_user.id%>">Add</a></button>    
+            <%} %>
+        </div>
+
+        
     <%}%>
     
     <hr>
@@ -78,22 +82,23 @@
     <%}%>
     <div id="users-posts">
         
-        <% for(p of all_posts){%>
+        <% for(post of all_posts){%>
             <div class="single-post">
-                <% if(locals.user && locals.user.id == p.user.id){%>
+                <% if(locals.user && locals.user.id == post.user.id){%>
                     <div id="delete-link">
-                        <a class="post-delete-btn" title="Delete" href="/posts/destroy/<%= p.id%>"><i class="fa-solid fa-circle-xmark"></i></a>
+                        <a class="post-delete-btn" title="Delete" href="/posts/destroy/<%= post.id%>"><i class="fa-solid fa-circle-xmark"></i></a>
                     </div>
                 <%} %>
                 <div id="post-img-container">
-                    <img src="<%= p.photo %>" alt="<%= p.caption %>" width="100" height="100">
+                    <img src="<%= post.photo %>" alt="<%= post.caption %>" width="100" height="100">
                 </div>
                 <div id="caption">
-                    <span><%= p.likes.length%> 👍❤️😂...</span>
-                    <p><%= p.caption %></p>
+                    <span><%= post.likes.length%> 👍❤️😂...</span>
+                    <p><%= post.caption %></p>
                 </div>
     
             </div>    
+            
         <%}%>
     
     </div>

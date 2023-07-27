@@ -6,7 +6,14 @@ const crypto = require('crypto');
 const nodeMailer = require('../mailers/reset_password_mailer');
 
 module.exports.profile = async function(req,res){
-    let posts = await Post.find({user: req.params.id}).populate('user');
+    let posts = await Post.find({user: req.params.id}).sort('-createdAt')
+    .populate('user').populate({
+        path:'comments',
+        populate: [
+            { path: 'user' }, // Populate 'user' field inside 'comments'
+            { path: 'likes' } // Populate 'likes' field inside 'comments'
+        ]
+    }).populate('likes');
     User.findById(req.params.id).then((user)=>{
         
         return res.render('user_profile',{
@@ -82,7 +89,7 @@ module.exports.createSession = async function(req,res){
     // let user = await User.findOne({email: req.body.email});
     req.flash('success','Logged in Successfully');
 
-    return res.redirect('/');
+    return res.redirect('/home');
 }
 
 //to sign out 
@@ -132,7 +139,7 @@ module.exports.update = async function(req,res){
 module.exports.resetPassword = function(req,res){
     return res.render('reset_password',{
         access: false,
-        title: 'Happen | Reset Password'
+        title: 'Happens | Reset Password'
     });
 }
 

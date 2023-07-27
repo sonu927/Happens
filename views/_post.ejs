@@ -1,47 +1,80 @@
-<li id="post-<%= post._id%>">
-    <p><%= post.user.name%></p>
-    <img src="<%= post.photo%>" alt="<%= post.caption%>" width="200" height="200">
-    <p><%= post.caption%></p>
-    <% if(locals.user){%>
-        <a id="main-frame-like-<%= post.id%>" href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=👍" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-            <% let like; %>
-            <% for(l of post.likes){%>
-                <% if(l.user == locals.user.id){%>
-                    <% like = l; %>    
-                <%} %>    
+<link rel="stylesheet" href="/css/_post.css">
+<li id="post-<%= post._id%>" id="post-li">
+    <div id="post-container">
+        <div id="post-header">
+            <div id="p-img-N-name">
+                <div id="post-user-img">
+                    <img src="<%= post.user.avatar%>" alt="<%= post.user.name%>" width="50px" height="50px">
+                </div>
+                <div>
+                    <p><big><%= post.user.name%></big></p>
+                    
+                </div>
+            </div>
+            
+            <% if(locals.user.id == post.user.id){%>
+                <div id="delete-link">
+                    <a class="post-delete-btn" title="Delete" href="/posts/destroy/<%= post.id%>"><i class="fas fa-times"></i></a>
+                </div>
             <%} %>
-            <%if(like){%>
-                <%= post.likes.length%> <%= like.reaction%>    
+
+        </div>
+
+        <div id="post-img-container">
+            <img src="<%= post.photo%>" alt="<%= post.caption%>">
+        </div>
+        <div>
+            <big><%= post.caption%></big>
+        </div>
+
+        <% if(locals.user){%>
+            <div class="like-container">
+                <a id="main-frame-like-<%= post.id%>" href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=👍" data-likes="<%= post.likes.length%>" class="toggle-like-button like-btn">
+                    <% let like; %>
+                    <% for(l of post.likes){%>
+                        <% if(l.user == locals.user.id){%>
+                            <% like = l; %>    
+                        <%} %>    
+                    <%} %>
+                    <%if(like){%>
+                        <%= post.likes.length%> <%= like.reaction%>    
+                    <%}else{%>
+                        <%= like%>
+                        <%= post.likes.length%> 👍
+                    <%}%>
+                </a>
+                <small>
+                    <div class="reaction-container">
+                        <a  href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=👍" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                             👍
+                        </a>
+                        <a  href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=❤️" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                             ❤️
+                        </a>
+                        <a  href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😂" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                             😂
+                        </a>
+                        <a  href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😲" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                           😲
+                        </a>
+                        <a  href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😥" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                             😥
+                        </a>
+                        <a  href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😡" data-likes="<%= post.likes.length%>" class="toggle-like-button">
+                             😡
+                        </a>
+                    </div>
+                </small>
+            </div>
             <%}else{%>
-                <%= like%>
-                <%= post.likes.length%> 👍
-            <%}%>
-        </a>
-        <small>
-            <ul>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=👍" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> 👍
-                </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=❤️" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> ❤️
-                </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😂" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> 😂
-                </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😲" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> 😲
-                </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😥" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> 😥
-                </a></li>
-                <li><a href="/likes/toggle/?id=<%= post._id%>&type=Post&reaction=😡" data-likes="<%= post.likes.length%>" class="toggle-like-button">
-                    <%= post.likes.length%> 😡
-                </a></li>
-            </ul>
-        </small>
-    <%}else{%>
-        <p><%= post.likes.length%> Reaction</p>
-    <%} %>
+                <div>
+                    <p><%= post.likes.length%> Reaction</p>
+                </div>
+                
+            <%} %>
+
+
+    </div>
 
     <div id="post-comments">
         <%if(locals.user){%>
@@ -56,6 +89,7 @@
             <ul id="post-comment-<%= post.id%>">
                 <% for(c of post.comments){%>
                     <%- include('_comment')%>
+                    
                 <%} %>
 
             </ul>
@@ -63,4 +97,13 @@
         </div>
 
     </div>
+
+    
+    
+    
+    
+    
+    
+
+    
 </li>

@@ -4,7 +4,8 @@ const router = express.Router();
 const homeController = require('../controllers/home_controller');
 const messageController = require('../controllers/message_controller');
 
-router.get('/',homeController.home);
+router.get('/',homeController.landing);
+router.get('/home',homeController.home)
 router.use('/users',require('./users'));
 router.use('/posts',require('./posts'));
 router.use('/comments',require('./comments'));

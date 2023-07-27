@@ -23,18 +23,70 @@
 
     let newCommentDOM = function(comment){
         return $(`
-        <li id="comment-${comment._id}>
-        <p>
+        <li class="comment-li" id="comment-${comment.id}">
+        <div id="comment-header">
+            <div id="c-img-content">
+                <div id="c-img-container">
+                    <img src="${comment.user.avatar}" alt="${comment.user.name}" >
+                </div>
+                
+                <div>
+                    <div>
+                        <small>${comment.user.name}</small>
+                        
+                    </div>
+                    <div>
+                        <big>
+                            <p style="margin: 0;">${comment.content}</p>
+                        </big>
+                        
+                    </div>
+                </div>
+            </div>
+    
             
-                <small>
-                    <a class="comment-delete-btn" href="/comments/destroy/${comment.id}">X</a>
-                </small>    
+                <div class="like-container">
+                    <a id="main-frame-like-${comment.id}" href="/likes/toggle/?id=${comment._id}&type=Comment&reaction=👍" data-likes="${comment.likes.length}" class="toggle-like-button like-btn">
+                        
+                            ${comment.likes.length} 👍
+                        
+                    </a>
+                    <small>
+                        <div class="reaction-container">
+                            <a  href="/likes/toggle/?id=${comment._id}&type=Comment&reaction=👍" data-likes="${comment.likes.length}" class="toggle-like-button">
+                                 👍
+                            </a>
+                            <a  href="/likes/toggle/?id=${comment._id}&type=Comment&reaction=❤️" data-likes="${comment.likes.length}" class="toggle-like-button">
+                                 ❤️
+                            </a>
+                            <a  href="/likes/toggle/?id=${comment._id}&type=Comment&reaction=😂" data-likes="${comment.likes.length}" class="toggle-like-button">
+                                 😂
+                            </a>
+                            <a  href="/likes/toggle/?id=${comment._id}&type=Comment&reaction=😲" data-likes="${comment.likes.length}" class="toggle-like-button">
+                               😲
+                            </a>
+                            <a  href="/likes/toggle/?id=${comment._id}&type=Comment&reaction=😥" data-likes="${comment.likes.length}" class="toggle-like-button">
+                                 😥
+                            </a>
+                            <a  href="/likes/toggle/?id=${comment._id}&type=Comment&reaction=😡" data-likes="${comment.likes.length}" class="toggle-like-button">
+                                 😡
+                            </a>
+                        </div>
+                    </small>
+                </div>
+                
+                    
+                
             
-            ${comment.content}
-            <small>
-                ${comment.user.name}
-            </small>
-        </p>
+            <div class="c-delete-btn">
+                
+                    
+                        <a class="comment-delete-btn" href="/comments/destroy/${comment.id}"><i class="fas fa-trash"></i></a> 
+                
+            </div>
+        </div>
+       
+        
     </li>
         `)
     }

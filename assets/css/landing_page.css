@@ -1,0 +1,95 @@
+#landing-container{
+    display: flex;
+    width: 60%;
+    height: 400px;
+    position: relative;
+    left: 18%;
+    top: 4em;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    justify-content: space-evenly;
+    gap: 15px;
+    align-items: center;
+    padding: 2%;
+    background-color: rgb(199, 196, 196);
+    
+}
+
+#divider{
+    height: 100%;
+    width: 1px;
+    background-color: black;
+}
+
+#logo-container,#all-login-options{
+   
+    padding: 1%;
+    flex: 1;
+    text-align: center;
+    
+    
+}
+
+#logo-container{
+    width: 40%;
+    height: 80%;
+}
+
+#logo-container img{
+    width: 95%;
+    height: 95%;
+    border-right: 10px solid darkslategray;
+    border-left: 10px solid darkgray;
+    border-bottom: 10px solid darkslategray;
+    border-top: 10px solid darkgray;
+}
+
+#all-login-options{
+    width: 50%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    border-radius: 20px;
+    background-color: rgb(204, 198, 198);
+    box-shadow: 0px 0px 2px 2px rgb(121, 121, 121);
+}
+
+.links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    height: 100%;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+
+#all-login-options div{
+    width: 50%;
+    height: 15%;
+    border-radius: 25px;
+    background-color: darkblue;
+}
+#all-login-options div:hover{
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+}
+.for-hover a:hover{
+    background-color: rgb(7, 7, 56);
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+    transition-delay: 0.01s;
+
+}
+#all-login-options hr{
+    width: 80%;
+    color: black;
+    height: 1px;
+}
+
+

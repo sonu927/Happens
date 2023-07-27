@@ -29,7 +29,7 @@ class ChatEngine{
         });
 
         this.socket.on('receive_message', (data)=>{
-            console.log('message received',data.message);
+            //console.log('message received',data.message);
             
 
             let newMessage = $('<li>');

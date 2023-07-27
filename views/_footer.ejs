@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="/css/footer.css">
+
 <footer>
     <div id="head">
         @Happens All Rights reserved
     </div>
 
     <div id="footer-links">
-        <p><a href="/">Home</a></p>
+        <p><a href="/home">Home</a></p>
         <%if(locals.user){%>
             <p><a href="/users/profile/<%= locals.user.id%>">Profile</a></p>
         <%}%>

@@ -1,17 +1,48 @@
-<h1>Sign up</h1>
-<form action="/users/create" enctype="multipart/form-data" method="post">
-    <input type="text" name="name" placeholder="Your name" required>
-    <input type="email" name="email" placeholder="Your email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input type="password" name="confirm_password" placeholder="Confirm password" required>
-    <input type="file" name="avatar" placeholder="Profile Picture">
-    <input type="submit" value="Sign Up">
-</form>
+<link rel="stylesheet" href="/css/user_signup.css">
 
-<p>
-    <a href="/users/auth/google">Google Sign-In/Sign-Up</a>
-</p>
+<div id="signup-container">
+    <div>
+        <h1>Sign up</h1>
+    </div>
 
-<p>
-    <a href="/users/auth/github">GitHub Sign-In/Sign-Up</a>
-</p>
+    <div id="signup-form-container">
+        <form id="signup-form" action="/users/create" enctype="multipart/form-data" method="post">
+            <div class="input-div">
+                <input class="form-input" type="text" name="name" placeholder="Name" required>
+                <label class="form-label" for="name">Name</label>
+            </div>
+
+            <div class="input-div">
+                <input class="form-input" type="email" name="email" placeholder="Your email" required>
+                <label class="form-label" for="email">Email</label>
+            </div>
+    
+            <div class="input-div">
+                <input class="form-input" type="password" name="password" placeholder="Password" required>
+                <label class="form-label" for="password">Password</label>
+            </div>
+            
+            <div class="input-div">
+                <input class="form-input" type="password" name="confirm_password" placeholder="Confirm password" required>
+                <label class="form-label" for="confirm_password">Confirm Password</label>
+            </div>
+            
+            <input id="customFileInput" type="file" name="avatar" placeholder="Profile Picture">
+            
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+
+    <div id="signup-google-github">
+        <div style="background-color: rgb(187, 35, 35);">
+            <a href="/users/auth/google"><i class="fab fa-google"></i>&nbsp;Google</a>
+        </div>
+       
+        <div style="background-color: black;">
+            <a href="/users/auth/github"><i class="fab fa-github"></i>&nbsp;GitHub</a>
+        </div>
+        
+    </div>
+
+
+</div>

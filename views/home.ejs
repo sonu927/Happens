@@ -5,18 +5,26 @@
     <section id="users-friends">
         <%if(locals.user){%>
             <h3>Friends</h3>
+            <hr>
             <% if(locals.user.friendships.length >0){%>
                 <% for(f of curr_user.friendships){%>
                     <% if(f.from_user.id == curr_user.id){%>
-                        <p>
+                        
+                        <div class="friends-div">
+                            <div class="f-img-container">
+                                <img src="<%= f.to_user.avatar%>" alt="<%= f.to_user.name%>" width="50px" height="50px">
+                            </div>
                             <a href="/users/profile/<%= f.to_user.id%>"><%= f.to_user.name%></a>
-                            <button class="chat-btn" data-friendID="<%= f.to_user.id%>" data-friendmail="<%= f.to_user.email%>"><a  class="chatLink" href="/chat/messages/?fid=<%= f.to_user.id%>">Chat</a></button>
-                        </p>    
+                            <button class="chat-btn" data-friendID="<%= f.to_user.id%>" data-friendmail="<%= f.to_user.email%>"><a  class="chatLink" href="/chat/messages/?fid=<%= f.to_user.id%>"><i class="fas fa-comment"></i></a></button>
+                        </div>    
                     <%}else{%>
-                        <p>
+                        <div class="friends-div">
+                            <div class="f-img-container">
+                                <img src="<%= f.from_user.avatar%>" alt="<%= f.from_user.name%>" width="50px" height="50px">
+                            </div>
                             <a href="/users/profile/<%= f.from_user.id%>"><%= f.from_user.name%></a>
-                            <button class="chat-btn" data-friendID="<%= f.from_user.id%>" data-friendmail="<%= f.from_user.email%>"><a class="chatLink" href="/chat/messages/?fid=<%= f.from_user.id%>">Chat</a></button>
-                        </p>  
+                            <button class="chat-btn" data-friendID="<%= f.from_user.id%>" data-friendmail="<%= f.from_user.email%>"><a class="chatLink" href="/chat/messages/?fid=<%= f.from_user.id%>"><i class="fas fa-comment"></i></a></button>
+                        </div>  
                     <%} %>    
                 <%} %>
             <%}else{%>
@@ -29,14 +37,14 @@
     </section>
     <section id="posts-feed">
         <% if(locals.user){%>
-            <h3>Post</h3>
+            <h3>Add Post</h3>
             <form id="new-post-form" action="/posts/create" method="post" enctype="multipart/form-data">
                 <input type="file" name="photo" placeholder="post-pic">
-                <textarea name="caption" id="" cols="30" rows="3"></textarea>
+                <textarea name="caption" id="" cols="30" rows="3" placeholder="Write Caption..."></textarea>
                 <input type="submit" value="Post">
             </form>
         <%} %>
-        
+        <hr>
             <div id="posts-list-container">
                 <ul>
                     <% for(post of posts){%>
@@ -54,13 +62,17 @@
         <% if(locals.user){%>
             <div id="friend-requests">
                 <h3>Friend Request</h3>
+                
                 <%if(locals.user.requestRecv.length > 0){%>
                     <% for(r of curr_user.requestRecv){%>
-                        <p>
+                        <div class="fr-div">
+                            <div class="fr-img-container">
+                                <img src="<%= r.avatar%>" alt="<%= r.name%>" width="50px" height="50px">
+                            </div>
                             <a href="/users/profile/<%= r.id%>"><%= r.name%></a>
-                            <button><a href="/users/friends/accept/<%= r.id%>">Accept</a></button>
-                            <button><a href="/users/friends/reject/<%= r.id%>">Reject</a></button>
-                        </p>    
+                            <button><a href="/users/friends/accept/<%= r.id%>"><i class="fas fa-check" style="color: greenyellow;"></i></a></button>
+                            <button><a href="/users/friends/reject/<%= r.id%>"><i class="fas fa-times" style="color: red;"></i></a></button>
+                        </div>    
                     <%} %>
                 <%}else{%>
                     <p>No Requests...</p>    
@@ -69,20 +81,27 @@
             <hr>
         <%} %>
         
-        <div>
+        <div id="add-friends">
             <%if(locals.user){%>
-                <h4>Add Friends</h4>
+                <h3>Add Friends</h3>
+                
                 <% for(u of users){%>
                     <% const hasCommonFriendship = locals.user.friendships.some(friendshipId => u.friendships.some(uFriendshipId => friendshipId.toString() === uFriendshipId.toString())); %>
                     <% if(locals.user.pendingReq.includes(u.id)){%>
-                        <p>
+                        <div class="af-div">
+                            <div class="af-img-container">
+                                <img src="<%= u.avatar%>" alt="<%= u.name%>" width="50px" height="50px">
+                            </div>
                             <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
                             <button><a href="/users/friends/cancel/<%= u.id%>" title="Cancel Request">Request Sent</a></button>
-                        </p>
+                        </div>
                     <%}else if(locals.user.id == u.id){%>
-                        <p>
+                        <div class="af-div">
+                            <div class="af-img-container">
+                                <img src="<%= u.avatar%>" alt="<%= u.name%>" width="50px" height="50px">
+                            </div>
                             <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
-                        </p>
+                        </div>
                     <%}else if(hasCommonFriendship){%>
                         <!-- <p>
                             <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
@@ -91,10 +110,13 @@
                         <% continue %>
                         
                     <%}else{%>
-                        <p>
+                        <div class="af-div">
+                            <div class="af-img-container">
+                                <img src="<%= u.avatar%>" alt="<%= u.name%>" width="50px" height="50px">
+                            </div>
                             <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
                             <button><a href="/users/friends/add/<%= u.id%>">Add</a></button>
-                        </p>
+                        </div>
                     <%}%>
                       
                 <%} %>    

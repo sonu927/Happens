@@ -60,6 +60,7 @@
 #users-posts{
     display: flex;
     padding: 1%;
+    
     justify-content: space-evenly;
 
     gap: 15px;
@@ -184,3 +185,20 @@
 }
 
 
+#req-btn button a{
+    text-decoration: none;
+    color: white;
+
+}
+#req-btn button{
+    border: none;
+    background-color: rgb(7, 7, 56);
+    padding: 8px;
+    min-width: 4em;
+    border-radius: 12px;
+}
+
+#req-btn button:hover{
+    background-color: rgb(30, 30, 123);
+    box-shadow: 2px 4px 10px 5px rgb(121, 121, 121);
+}

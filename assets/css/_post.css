@@ -1,0 +1,89 @@
+
+#post-container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 80%;
+    background-color: aliceblue;
+    padding: 3%;
+    border-radius: 25px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+#post-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#p-img-N-name{
+    display: flex;
+    width: 40%;
+    gap: 0.7em;
+}
+
+#post-user-img{
+    border-radius: 50%;
+    
+}
+
+#post-user-img img{
+    border-radius: 50%;
+    outline: 3px solid black;
+}
+
+#post-img-container{
+    display: inline-block;
+    
+}
+
+#post-img-container img{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    outline: 2px solid black;
+}
+
+#delete-link a{
+    font-size: large;
+    color: rgb(8, 8, 78);
+}
+
+#post-comments{
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+#post-comments form input{
+    border: none;
+    background: rgb(246, 244, 244);
+    border-bottom: 2px solid darkslategray;
+    height: 30px;
+    width: 40%;
+    color: black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0.5%;
+}
+#post-comments form input::placeholder{
+    color: black;
+}
+#post-comments form input[type="submit"]{
+    width: 20%;
+    margin-left: 1em;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(7, 7, 52);
+    transition: 0.2s;
+}
+#post-comments form input[type="submit"]:hover{
+    background-color: rgb(23, 23, 118);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+#post-comments-list ul{
+    list-style: none;
+    padding: 0;
+}

@@ -30,12 +30,10 @@ module.exports.home = async function(req,res){
         .sort('-createdAt')
         .populate('user').populate({
             path:'comments',
-            populate:{
-                path: 'user'
-            },
-            populate:{
-                path: 'likes'
-            }
+            populate: [
+                { path: 'user' }, // Populate 'user' field inside 'comments'
+                { path: 'likes' } // Populate 'likes' field inside 'comments'
+            ]
         }).populate('likes');
         //console.log(curr_user);
         return res.render('home',{
@@ -60,5 +58,11 @@ module.exports.home = async function(req,res){
     return res.render('home',{
         title: 'Home',
         posts: posts
+    });
+}
+
+module.exports.landing = function(req,res){
+    return res.render('landing_page',{
+        title: 'Happens'
     });
 }

@@ -1,131 +1,182 @@
-<link rel="stylesheet" href="/css/home.css">
-<link rel="stylesheet" href="/css/chat_box.css">
+<link rel="stylesheet" href="/css/home.css" />
+<link rel="stylesheet" href="/css/chat_box.css" />
 <div id="home-container">
+  <section id="users-friends">
+    <%if(locals.user){%>
+    <h3>Friends</h3>
+    <hr />
+    <% if(locals.user.friendships.length >0){%> <% for(f of
+    curr_user.friendships){%> <% if(f.from_user.id == curr_user.id){%> //fre
+    <div class="friends-div">
+      <div class="f-img-container">
+        <img
+          src="<%= f.to_user.avatar%>"
+          alt="<%= f.to_user.name%>"
+          width="50px"
+          height="50px"
+        />
+      </div>
+      <a href="/users/profile/<%= f.to_user.id%>"><%= f.to_user.name%></a>
+      <button
+        class="chat-btn"
+        data-friendID="<%= f.to_user.id%>"
+        data-friendmail="<%= f.to_user.email%>"
+      >
+        <a class="chatLink" href="/chat/messages/?fid=<%= f.to_user.id%>"
+          ><i class="fas fa-comment"></i
+        ></a>
+      </button>
+    </div>
+    <%}else{%>
+    <div class="friends-div">
+      <div class="f-img-container">
+        <img
+          src="<%= f.from_user.avatar%>"
+          alt="<%= f.from_user.name%>"
+          width="50px"
+          height="50px"
+        />
+      </div>
+      <a href="/users/profile/<%= f.from_user.id%>"><%= f.from_user.name%></a>
+      <button
+        class="chat-btn"
+        data-friendID="<%= f.from_user.id%>"
+        data-friendmail="<%= f.from_user.email%>"
+      >
+        <a class="chatLink" href="/chat/messages/?fid=<%= f.from_user.id%>"
+          ><i class="fas fa-comment"></i
+        ></a>
+      </button>
+    </div>
+    <%} %> <%} %> <%}else{%>
+    <p>No Friends.....:(</p>
+    <%} %> <%}%>
+  </section>
+  <section id="posts-feed">
+    <% if(locals.user){%>
+    <h3>Add Post</h3>
+    <form
+      id="new-post-form"
+      action="/posts/create"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="photo" placeholder="post-pic" />
+      <textarea
+        name="caption"
+        id=""
+        cols="30"
+        rows="3"
+        placeholder="Write Caption..."
+      ></textarea>
+      <input type="submit" value="Post" />
+    </form>
+    <%} %>
+    <hr />
+    <div id="posts-list-container">
+      <ul>
+        <% for(post of posts){%>
+        <div><%- include('_post') %></div>
 
-    <section id="users-friends">
-        <%if(locals.user){%>
-            <h3>Friends</h3>
-            <hr>
-            <% if(locals.user.friendships.length >0){%>
-                <% for(f of curr_user.friendships){%>
-                    <% if(f.from_user.id == curr_user.id){%>
-                        
-                        <div class="friends-div">
-                            <div class="f-img-container">
-                                <img src="<%= f.to_user.avatar%>" alt="<%= f.to_user.name%>" width="50px" height="50px">
-                            </div>
-                            <a href="/users/profile/<%= f.to_user.id%>"><%= f.to_user.name%></a>
-                            <button class="chat-btn" data-friendID="<%= f.to_user.id%>" data-friendmail="<%= f.to_user.email%>"><a  class="chatLink" href="/chat/messages/?fid=<%= f.to_user.id%>"><i class="fas fa-comment"></i></a></button>
-                        </div>    
-                    <%}else{%>
-                        <div class="friends-div">
-                            <div class="f-img-container">
-                                <img src="<%= f.from_user.avatar%>" alt="<%= f.from_user.name%>" width="50px" height="50px">
-                            </div>
-                            <a href="/users/profile/<%= f.from_user.id%>"><%= f.from_user.name%></a>
-                            <button class="chat-btn" data-friendID="<%= f.from_user.id%>" data-friendmail="<%= f.from_user.email%>"><a class="chatLink" href="/chat/messages/?fid=<%= f.from_user.id%>"><i class="fas fa-comment"></i></a></button>
-                        </div>  
-                    <%} %>    
-                <%} %>
-            <%}else{%>
-                <p>No Friends.....:(</p>    
-            <%} %>
-            
-                
-        <%}%>
+        <%} %>
+      </ul>
+    </div>
+  </section>
 
-    </section>
-    <section id="posts-feed">
-        <% if(locals.user){%>
-            <h3>Add Post</h3>
-            <form id="new-post-form" action="/posts/create" method="post" enctype="multipart/form-data">
-                <input type="file" name="photo" placeholder="post-pic">
-                <textarea name="caption" id="" cols="30" rows="3" placeholder="Write Caption..."></textarea>
-                <input type="submit" value="Post">
-            </form>
-        <%} %>
-        <hr>
-            <div id="posts-list-container">
-                <ul>
-                    <% for(post of posts){%>
-                        <div>
-                            <%- include('_post') %>
-                        </div>
-                            
-                    <%} %>
-                </ul>
-            </div>
-    
-    </section>
-    
-    <section id="user-N-friends">
-        <% if(locals.user){%>
-            <div id="friend-requests">
-                <h3>Friend Request</h3>
-                
-                <%if(locals.user.requestRecv.length > 0){%>
-                    <% for(r of curr_user.requestRecv){%>
-                        <div class="fr-div">
-                            <div class="fr-img-container">
-                                <img src="<%= r.avatar%>" alt="<%= r.name%>" width="50px" height="50px">
-                            </div>
-                            <a href="/users/profile/<%= r.id%>"><%= r.name%></a>
-                            <button><a href="/users/friends/accept/<%= r.id%>"><i class="fas fa-check" style="color: greenyellow;"></i></a></button>
-                            <button><a href="/users/friends/reject/<%= r.id%>"><i class="fas fa-times" style="color: red;"></i></a></button>
-                        </div>    
-                    <%} %>
-                <%}else{%>
-                    <p>No Requests...</p>    
-                <%}%>
-            </div>
-            <hr>
-        <%} %>
-        
-        <div id="add-friends">
-            <%if(locals.user){%>
-                <h3>Add Friends</h3>
-                
-                <% for(u of users){%>
-                    <% const hasCommonFriendship = locals.user.friendships.some(friendshipId => u.friendships.some(uFriendshipId => friendshipId.toString() === uFriendshipId.toString())); %>
-                    <% if(locals.user.pendingReq.includes(u.id)){%>
-                        <div class="af-div">
-                            <div class="af-img-container">
-                                <img src="<%= u.avatar%>" alt="<%= u.name%>" width="50px" height="50px">
-                            </div>
-                            <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
-                            <button><a href="/users/friends/cancel/<%= u.id%>" title="Cancel Request">Request Sent</a></button>
-                        </div>
-                    <%}else if(locals.user.id == u.id){%>
-                        <div class="af-div">
-                            <div class="af-img-container">
-                                <img src="<%= u.avatar%>" alt="<%= u.name%>" width="50px" height="50px">
-                            </div>
-                            <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
-                        </div>
-                    <%}else if(hasCommonFriendship){%>
-                        <!-- <p>
+  <section id="user-N-friends">
+    <% if(locals.user){%>
+    <div id="friend-requests">
+      <h3>Friend Request</h3>
+
+      <%if(locals.user.requestRecv.length > 0){%> <% for(r of
+      curr_user.requestRecv){%>
+      <div class="fr-div">
+        <div class="fr-img-container">
+          <img
+            src="<%= r.avatar%>"
+            alt="<%= r.name%>"
+            width="50px"
+            height="50px"
+          />
+        </div>
+        <a href="/users/profile/<%= r.id%>"><%= r.name%></a>
+        <button>
+          <a href="/users/friends/accept/<%= r.id%>"
+            ><i class="fas fa-check" style="color: greenyellow"></i
+          ></a>
+        </button>
+        <button>
+          <a href="/users/friends/reject/<%= r.id%>"
+            ><i class="fas fa-times" style="color: red"></i
+          ></a>
+        </button>
+      </div>
+      <%} %> <%}else{%>
+      <p>No Requests...</p>
+      <%}%>
+    </div>
+    <hr />
+    <%} %>
+
+    <div id="add-friends">
+      <%if(locals.user){%>
+      <h3>Add Friends</h3>
+
+      <% for(u of users){%> <% const hasCommonFriendship =
+      locals.user.friendships.some(friendshipId =>
+      u.friendships.some(uFriendshipId => friendshipId.toString() ===
+      uFriendshipId.toString())); %> <%
+      if(locals.user.pendingReq.includes(u.id)){%>
+      <div class="af-div">
+        <div class="af-img-container">
+          <img
+            src="<%= u.avatar%>"
+            alt="<%= u.name%>"
+            width="50px"
+            height="50px"
+          />
+        </div>
+        <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+        <button>
+          <a href="/users/friends/cancel/<%= u.id%>" title="Cancel Request"
+            >Request Sent</a
+          >
+        </button>
+      </div>
+      <%}else if(locals.user.id == u.id){%>
+      <div class="af-div">
+        <div class="af-img-container">
+          <img
+            src="<%= u.avatar%>"
+            alt="<%= u.name%>"
+            width="50px"
+            height="50px"
+          />
+        </div>
+        <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+      </div>
+      <%}else if(hasCommonFriendship){%>
+      <!-- <p>
                             <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
                             <button><a href="/users/friends/unfriend/<%= u.id%>">Unfriend</a></button>
                         </p> -->
-                        <% continue %>
-                        
-                    <%}else{%>
-                        <div class="af-div">
-                            <div class="af-img-container">
-                                <img src="<%= u.avatar%>" alt="<%= u.name%>" width="50px" height="50px">
-                            </div>
-                            <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
-                            <button><a href="/users/friends/add/<%= u.id%>">Add</a></button>
-                        </div>
-                    <%}%>
-                      
-                <%} %>    
-            <%}%>
+      <% continue %> <%}else{%>
+      <div class="af-div">
+        <div class="af-img-container">
+          <img
+            src="<%= u.avatar%>"
+            alt="<%= u.name%>"
+            width="50px"
+            height="50px"
+          />
         </div>
-    
-    </section>
-    <%- include('_chat_box') -%>
-
+        <a href="/users/profile/<%= u.id%>"><%= u.name%></a>
+        <button><a href="/users/friends/add/<%= u.id%>">Add</a></button>
+      </div>
+      <%}%> <%} %> <%}%>
+    </div>
+  </section>
+  <%- include('_chat_box') -%>
 </div>
 
 <script src="/js/home_post.js"></script>
@@ -134,96 +185,99 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.min.js"></script>
 <script src="/js/chat_engine.js"></script>
 <% if(locals.user){%>
-    <script>
-        const chat = new ChatEngine('user-chat-box', '<%= locals.user.email %>' , '<%= locals.user.name%>');
-        $(document).ready(function() {
-            let selectedFriendmail; // Declare the variable outside the click event listener
-            let selectedFriendID;
-            let room;
-            // Function to scroll chat box to bottom
-            function scrollChatBoxToBottom() {
-                var chatBox = document.getElementById("chat-messages-list");
-                chatBox.scrollTop = chatBox.scrollHeight;
+<script>
+  const chat = new ChatEngine(
+    "user-chat-box",
+    "<%= locals.user.email %>",
+    "<%= locals.user.name%>"
+  );
+  $(document).ready(function () {
+    let selectedFriendmail; // Declare the variable outside the click event listener
+    let selectedFriendID;
+    let room;
+    // Function to scroll chat box to bottom
+    function scrollChatBoxToBottom() {
+      var chatBox = document.getElementById("chat-messages-list");
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    $(".chat-btn").click(function () {
+      selectedFriendmail = this.getAttribute("data-friendmail"); // Update the variable inside the listener
+      selectedFriendID = this.getAttribute("data-friendID");
+      const arr = ["<%= locals.user.email%>", selectedFriendmail];
+      arr.sort();
+      room = arr[0] + arr[1];
+      //console.log("Friend ID clicked:", selectedFriendID);
+      $("#user-chat-box").toggle();
+      if ($("#user-chat-box").is(":visible")) {
+        scrollChatBoxToBottom();
+      }
+
+      chat.startChat(selectedFriendmail);
+
+      // Set the friendId as a data attribute on the send-message button
+      $("#send-message").data("friendID", selectedFriendID);
+    });
+
+    // Event listener for sending a chat message
+    $("#send-message").on("click", function () {
+      const message = $("#chat-message-input").val();
+      const friendId = $("#send-message").data("friendID"); // Use the correct element to retrieve the value
+      const senderId = "<%= locals.user.id%>";
+      //console.log(friendId);
+      chat.sendMessage(message, senderId, friendId, room);
+      $("#chat-message-input").val("");
+      scrollChatBoxToBottom();
+    });
+
+    let curr_user_id = "<%= locals.user.id%>";
+    let oldMsg = function () {
+      let chatLink = $(".chatLink");
+      chatLink.click(function (e) {
+        e.preventDefault();
+        const self = this;
+        //console.log('chatLink :',$(self).attr('href'));
+
+        $.ajax({
+          type: "post",
+          url: $(self).attr("href"),
+        })
+          .done(function (data) {
+            $("#chat-messages-list").empty();
+            for (m of data.data.messages) {
+              let newMessage = $("<li>");
+
+              let messageType = "other-message";
+
+              if (m.sender._id == curr_user_id) {
+                messageType = "self-message";
+              }
+              newMessage.append(
+                $("<p>", {
+                  html: m.sender.name,
+                })
+              );
+
+              newMessage.append(
+                $("<span>", {
+                  html: m.content,
+                })
+              );
+
+              newMessage.addClass(messageType);
+
+              $("#chat-messages-list").append(newMessage);
             }
+            //console.log(data);
+            scrollChatBoxToBottom();
+          })
+          .fail(function (errData) {
+            console.log("error in completing the old messag request", errData);
+          });
+      });
+    };
 
-            $('.chat-btn').click(function() {
-                selectedFriendmail = this.getAttribute('data-friendmail'); // Update the variable inside the listener
-                selectedFriendID = this.getAttribute('data-friendID');
-                const arr = ['<%= locals.user.email%>',selectedFriendmail];
-                arr.sort();
-                room = arr[0]+arr[1];
-                //console.log("Friend ID clicked:", selectedFriendID);
-                $('#user-chat-box').toggle();
-                if($('#user-chat-box').is(':visible')){
-                    scrollChatBoxToBottom();
-                }
-                
-                chat.startChat(selectedFriendmail);
-
-                // Set the friendId as a data attribute on the send-message button
-                $('#send-message').data('friendID', selectedFriendID);
-            });
-
-            // Event listener for sending a chat message
-            $('#send-message').on('click', function() {
-                const message = $('#chat-message-input').val();
-                const friendId = $('#send-message').data('friendID'); // Use the correct element to retrieve the value
-                const senderId = '<%= locals.user.id%>'
-                //console.log(friendId);
-                chat.sendMessage(message,senderId,friendId,room);
-                $('#chat-message-input').val('');
-                scrollChatBoxToBottom();
-            });
-
-
-            let curr_user_id = '<%= locals.user.id%>'
-            let oldMsg = function(){
-                let chatLink = $('.chatLink');
-                chatLink.click(function(e){
-                    e.preventDefault();
-                    const self = this;
-                    //console.log('chatLink :',$(self).attr('href'));
-                
-                    $.ajax({
-                        type: 'post',
-                        url: $(self).attr('href')
-                    })
-                    .done(function(data){
-                        $('#chat-messages-list').empty();
-                        for(m of data.data.messages){
-                            let newMessage = $('<li>');
-
-                            let messageType = "other-message";
-
-                            if(m.sender._id == curr_user_id){
-                                messageType = "self-message";
-                            }
-                            newMessage.append($('<p>',{
-                                'html': m.sender.name
-                            }));
-
-                            newMessage.append($('<span>',{
-                                'html': m.content
-                            }));
-
-                            newMessage.addClass(messageType);
-
-                            $('#chat-messages-list').append(newMessage);
-                        }
-                        //console.log(data);
-                        scrollChatBoxToBottom();
-                    })
-                    .fail(function(errData){
-                        console.log('error in completing the old messag request',errData);
-                    });
-                });
-            }
-
-            oldMsg();
-
-
-        });
-
-        
-    </script>    
+    oldMsg();
+  });
+</script>
 <%}%>
